@@ -27,7 +27,9 @@ export default defineNuxtConfig({
     // 'locomotive-scroll/dist/locomotive-scroll.css'
   ],
   runtimeConfig: {
-    xmlApi: '',
+    public: {
+      xmlApi: '',
+    }
   },
   app: {
     baseURL: '/pay-days/', // baseURL: '/<repository>/'
