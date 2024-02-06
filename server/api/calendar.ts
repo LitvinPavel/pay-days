@@ -60,7 +60,7 @@ function formatData(dataItems: IDataItem[], year: number) {
 export default defineEventHandler(async (event) => {
     const config = useRuntimeConfig(event);
     const query = getQuery(event);
-    const { months } = await $fetch(`${config.xmlApi}/${query.year}/calendar.json`);
+    const { months } = await $fetch(`/${query.year}/calendar.json`, { baseURL: config.public.xmlApi || 'https://xmlcalendar.ru/data/ru' });
     if (!months) return null;
     return formatData(months, Number(query.year));
 });

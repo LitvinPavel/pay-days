@@ -41,7 +41,7 @@ const props = defineProps({
 
   async function setStage()  {
     try {
-      const { data } = await useFetchCalendar(props.year);
+      const { data } = await useFetch(`/api/calendar?year=${props.year}`);
       if (data.value) {
         (data.value || []).forEach((item: IResultItem, key: number) => {
           useSetStorage(`${props.year}-${key}`, item);
