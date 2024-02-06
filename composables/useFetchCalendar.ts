@@ -61,7 +61,7 @@ function formatData(dataItems: IDataItem[], year: number) {
 
 export async function useFetchCalendar(year: number): Promise<AsyncData<any, Error | null>> {
     const config = useRuntimeConfig();
-    const { data } = await useFetch(`${config.xmlApi}/${year}/calendar.json`, { baseURL: config.xmlApi });
+    const { data } = await useFetch(`/${year}/calendar.json`, { baseURL: config.xmlApi });
     if (!data.value?.months) return null;
     return formatData(data.value?.months, Number(year));
 }
