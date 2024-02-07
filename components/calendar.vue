@@ -1,9 +1,10 @@
 <template>
-    <div class="calendar">
+    <div ref="refWindow" class="calendar">
         <header>
-          <nuxt-link :to="prev()">prev</nuxt-link>
+          <button @click="prev"><angle-left width="24" height="24" /></button>
+          <button @click="signOut">Выйти</button>
           <h1>{{ month + 1 }} / {{ year }}</h1>
-          <nuxt-link :to="next()">next</nuxt-link>
+          <button @click="next"><angle-right width="24" height="24" /></button>
         </header>
         <ul class="weekdays">
             <li>
@@ -48,6 +49,16 @@ const props = defineProps({
   year: { type: Number, default: new Date().getFullYear() },
   month: { type: Number, default: new Date().getMonth() }
 });
+const client = useSupabaseClient();
+const refWindow = ref(null)
+const { direction } = useSwipe(
+    refWindow, {
+        onSwipe() {
+          if(direction.value === "left") next()
+          else if (direction.value === "right") prev()
+        },
+    }
+)
 const salary = 200000;
 const last = ref<number>(0);
 const { days, work } = await useGetStorage(`${props.year}-${props.month}`);
@@ -72,13 +83,18 @@ function sumFormat(value: number): string {
 function prev() {
   const year = props.month === 0 ? props.year - 1 : props.year;
   const month = props.month === 0 ? 11 : props.month - 1;
-  return `/calendar/${year}/${month}`
+  navigateTo(`/calendar/${year}/${month}`);
 }
 
 function next() {
   const year = props.month === 11 ? props.year + 1 : props.year;
   const month = props.month === 11 ? 0 : props.month + 1;
-  return `/calendar/${year}/${month}`
+  navigateTo(`/calendar/${year}/${month}`);
+}
+
+async function signOut() {
+  const { error } = await client.auth.signOut()
+  createError({ statusCode: 404, message: `${error}` })
 }
 
 </script>
@@ -86,23 +102,25 @@ function next() {
 <style scoped>
 .calendar {
     flex: 1;
+    max-width: 64em;
 }
 header {
     display: flex;
     align-items: center;
     font-size: calc(16px + (26 - 16) * ((100vw - 300px) / (1600 - 300)));
-    justify-content: center;
-    margin-bottom: 2em;
-    background: #000;
+    justify-content: space-between;
+    margin-bottom: 1em;
     min-height: 10vh;
     text-align: center;
+}
+header h1 {
+  margin: 0;
 }
 ul, ol {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-gap: 1em;
   margin: 0 auto;
-  max-width: 64em;
   padding: 0;
 }
 li {
@@ -150,7 +168,7 @@ ol.day-grid li.holiday {
 
 ul.weekdays abbr[title] {
   border: none;
-  font-weight: 800;
+  font-weight: 500;
   text-decoration: none;
 }
 
@@ -164,7 +182,9 @@ ul.weekdays abbr[title] {
   ul.weekdays li {
     font-size: 0;
   }
-  
+  header {
+    padding: 0 1em;
+  }
   ul.weekdays > li abbr:after {
       content: attr(title);
       font-size: calc(16px + (26 - 16) * ((100vw - 300px) / (1600 - 300)));

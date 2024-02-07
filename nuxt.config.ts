@@ -1,6 +1,28 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+import { pwa } from './config/pwa'
+
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  app: {
+    head: {
+      viewport: 'width=device-width,initial-scale=1',
+      link: [
+        { rel: 'icon', href: '/favicon.ico', sizes: 'any' },
+        { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+      ],
+      meta: [
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { name: 'description', content: 'Application for monitoring your salary' },
+        { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
+      ],
+    },
+  },
+  pwa,
+  modules: [
+    '@vueuse/nuxt',
+    '@vite-pwa/nuxt',
+    '@nuxtjs/supabase',
+    '@nuxtjs/tailwindcss'
+  ],
   components: [
     {
       global: true,
@@ -10,21 +32,15 @@ export default defineNuxtConfig({
   ],
   imports: {
     dirs: [
-      // Scan top-level modules
       'composables',
-      // ... or scan modules nested one level deep with a specific name and file extension
       'composables/*/index.{ts,js,mjs,mts}',
-      // ... or scan all modules within given directory
       'composables/**',
-      // Scan top-level modules
       'components',
-      // ... or scan all modules within given directory
       'components/**'
     ]
   },
   css: [
     '~/assets/styles/main.css'
-    // 'locomotive-scroll/dist/locomotive-scroll.css'
   ],
   runtimeConfig: {
     public: {

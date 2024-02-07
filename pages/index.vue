@@ -1,8 +1,6 @@
 <template>
-    <loader v-if="loading" @loaded="loading = false" />
-    <calendar v-else />
+    <div>Hello</div>
 </template>
 
 <script setup lang="ts">
-    const loading = ref<boolean>(true);
 </script>

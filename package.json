@@ -11,10 +11,16 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@vite-pwa/nuxt": "^0.4.0",
+    "@vueuse/nuxt": "^10.7.2",
     "gh-pages": "^6.1.1",
     "localforage": "^1.10.0",
     "nuxt": "^3.10.0",
     "vue": "^3.4.15",
     "vue-router": "^4.2.5"
+  },
+  "devDependencies": {
+    "@nuxtjs/supabase": "^1.1.6",
+    "@nuxtjs/tailwindcss": "^6.11.3"
   }
 }
