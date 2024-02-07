@@ -5,21 +5,6 @@
   </template>
   
   <script setup lang="ts">
-  interface IResultItem {
-    first: number;
-    last: number;
-    lastYear?: number;
-    month: number;
-    work: number[];
-    days: { [key: string]: IDayState };
-  }
-  
-  interface IDayState {
-    isHoliday: boolean;
-    weekDay: number;
-    plan?: number;
-    fact?: number;
-  }
   const props = defineProps({
     year: { type: Number, default: new Date().getFullYear() },
     month: { type: Number, default: new Date().getMonth() },

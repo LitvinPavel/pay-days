@@ -1,9 +1,10 @@
 <template>
     <div ref="refWindow" class="calendar">
+      <button class="rounded-full shadow-md shadow-black absolute bottom-0 right-0 mb-6 mr-6 p-3" @click="signOut"><sign-out-alt width="24" height="24" /></button>
         <header>
           <button @click="prev"><angle-left width="24" height="24" /></button>
-          <button @click="signOut">Выйти</button>
-          <h1>{{ month + 1 }} / {{ year }}</h1>
+          
+          <h1>{{ getMonthName(month) }} {{ year }}</h1>
           <button @click="next"><angle-right width="24" height="24" /></button>
         </header>
         <ul class="weekdays">
@@ -30,16 +31,14 @@
             </li>
         </ul>
         <ol class="day-grid">
-            <li
-                v-for="(val, key) in days"
-                :key="key"
-                :style="Number(key) === 1 ? `grid-column: ${val.weekDay === 0 ? 7 : val.weekDay};` : ''"
-                :class="{ 'holiday': val.isHoliday }"
-            >
-                <span style="position: absolute; right: 0; top: 0; margin: 0.5rem;">{{ key }}</span>
-                <span v-if="Number(key) === 12">{{ sumFormat(salary * last) }} ₽</span>
-                <span v-if="Number(key) === 27">{{ sumFormat(salary * first) }} ₽</span>
-            </li>
+          <calendar-item
+            v-for="(item, key) in days"
+            :key="key"
+            :date="Number(key)"
+            :item="item"
+            :year="year"
+            :month="month"
+          />
         </ol>
     </div>
 </template>
@@ -59,26 +58,8 @@ const { direction } = useSwipe(
         },
     }
 )
-const salary = 200000;
-const last = ref<number>(0);
-const { days, work } = await useGetStorage(`${props.year}-${props.month}`);
-if (props.month) {
-    const { work: prevWork } = await useGetStorage(`${props.year}-${props.month - 1}`);
-    last.value = prevWork.filter((w: number) => w > 15).length / prevWork.length
-}
 
-const first = computed(() => {
-    return work.filter((w: number) => w <= 15).length / work.length;
-});
-
-const lastYear = computed(() => {
-    return props.month === 11 ? work.length - first.value : 0;
-});
-
-function sumFormat(value: number): string {
-  if (!value) return '0';
-  return String(value.toFixed()).replace(/(.)(?=(\d{3})+$)/g,'$1 ');
-}
+const { days } = await useGetDaysData(props.year, props.month);
 
 function prev() {
   const year = props.month === 0 ? props.year - 1 : props.year;
