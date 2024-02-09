@@ -47,10 +47,10 @@ function formatData(dataItems: IDataItem[], year: number) {
 }
 
 export default defineEventHandler(async (event) => {
-  const user = await serverSupabaseUser(event);
-  if (!user) {
-    throw createError({ statusCode: 401, message: "Unauthorized" });
-  }
+//   const user = await serverSupabaseUser(event);
+//   if (!user) {
+//     throw createError({ statusCode: 401, message: "Unauthorized" });
+//   }
   const config = useRuntimeConfig(event);
   const query = getQuery(event);
   const { months } = await $fetch(`/${query.year}/calendar.json`, {

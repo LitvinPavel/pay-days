@@ -31,17 +31,15 @@ export default defineNuxtConfig({
     }
   ],
   imports: {
-    dirs: [
-      'composables',
-      'composables/*/index.{ts,js,mjs,mts}',
-      'composables/**',
-      'components',
-      'components/**'
-    ]
+    autoImport: true,
   },
   css: [
     '~/assets/styles/main.css'
   ],
+  appConfig: {
+    // you don't need to include this: only for testing purposes
+    buildDate: new Date().toISOString(),
+  },
   runtimeConfig: {
     public: {
       xmlApi: '',
