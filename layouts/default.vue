@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main class="mx-auto">
     <slot />
     <pd-footer />
   </main>

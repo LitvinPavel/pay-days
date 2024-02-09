@@ -89,14 +89,7 @@ ul.weekdays li.holiday {
   text-align: right;
 }
 
-ol.day-grid li:hover,
-ol.day-grid li.holiday:hover {
-  background-color: #028e4a;
-  cursor: pointer;
-}
-
 ol.day-grid li {
-  background-color: #333;
   border: 1px solid #eaeaea;
   height: 12vw;
   max-height: 125px;

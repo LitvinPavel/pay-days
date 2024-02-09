@@ -1,7 +1,7 @@
 <template>
     <header>
       <button @click="emit('preview')"><angle-left width="24" height="24" /></button>
-      <h1>{{ getMonthName(month) }} {{ year }}</h1>
+        <h1>{{ getMonthName(month) }} {{ year }}</h1>
       <button @click="emit('next')"><angle-right width="24" height="24" /></button>
     </header>
 </template>

@@ -1,41 +1,48 @@
 <template>
-  <footer>
-    <span>Built Date: {{ date }}</span>
-    <ClientOnly>
-      <div
-        v-if="$pwa?.offlineReady || $pwa?.needRefresh"
-        class="pwa-toast"
-        role="alert"
-      >
-        <div class="message">
-          <span v-if="$pwa.offlineReady"> App ready to work offline </span>
-          <span v-else>
-            New content available, click on reload button to update.
-          </span>
+  <footer class="fixed w-full bottom-0 transform transition duration-500 ease-in-out z-30 h-[30rem] bg-zinc-800 mt-1" :class="{ 'translate-y-[25rem]': !isShow }">
+    <div class="relative p-8">
+      <div class="absolute top-2 left-1/2 ml--20 h-0.5 w-20 bg-white rounded-full translate-x-[-2.5rem]" @click="$emit('show')" />
+      <span>Дата установки: {{ new Date(date).toLocaleString() }} PWA Installed: {{ $pwa?.isPWAInstalled }}</span>
+      <ClientOnly>
+        <div
+          v-if="$pwa?.offlineReady || $pwa?.needRefresh"
+          class="pwa-toast"
+          role="alert"
+        >
+          <div class="message">
+            <span v-if="$pwa.offlineReady"> Приложение готово к работе в автономном режиме </span>
+            <span v-else>
+              Доступен новый контент
+            </span>
+          </div>
+          <button v-if="$pwa.needRefresh" @click="$pwa.updateServiceWorker()">
+            Обновить
+          </button>
+          <button @click="$pwa.cancelPrompt()">Закрыть</button>
         </div>
-        <button v-if="$pwa.needRefresh" @click="$pwa.updateServiceWorker()">
-          Reload
-        </button>
-        <button @click="$pwa.cancelPrompt()">Close</button>
-      </div>
-      <div
-        v-if="
-          $pwa?.showInstallPrompt && !$pwa?.offlineReady && !$pwa?.needRefresh
-        "
-        class="pwa-toast"
-        role="alert"
-      >
-        <div class="message">
-          <span> PWA Installed: {{ $pwa?.isPWAInstalled }} </span>
+        <div
+          v-if="
+            $pwa?.showInstallPrompt && !$pwa?.offlineReady && !$pwa?.needRefresh
+          "
+          class="pwa-toast"
+          role="alert"
+        >
+          <div class="message">
+            <span>Установить PayDays?</span>
+          </div>
+          <button @click="$pwa.install()">Да</button>
+          <button @click="$pwa.cancelInstall()">Нет</button>
         </div>
-        <button @click="$pwa.install()">Install</button>
-        <button @click="$pwa.cancelInstall()">Cancel</button>
-      </div>
-    </ClientOnly>
+      </ClientOnly>
+    </div>
+    
   </footer>
 </template>
 
 <script setup lang="ts">
+defineProps({
+  isShow: { type: Boolean, default: false }
+});
 const date = useAppConfig().buildDate;
 </script>
 

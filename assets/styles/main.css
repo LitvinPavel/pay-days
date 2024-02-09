@@ -10,8 +10,6 @@ body {
 }
 
 #__nuxt {
-    display: flex;
-    justify-content: center;
     background : rgb(39 39 42);
     flex: 1;
 }
