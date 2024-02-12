@@ -1,6 +1,7 @@
 <template>
   <div>
     <button class="rounded-full shadow-md shadow-black absolute bottom-0 right-0 mb-6 mr-6 p-3" @click="signOut"><sign-out-alt width="24" height="24" /></button>
+    <scheduler-dialog v-model="showModal" :date="selectDay" :year="year" :month="month"/>
     <ul class="weekdays">
       <li>
         <abbr title="Пн">Понедельник</abbr>
@@ -32,8 +33,10 @@
         :item="item"
         :year="year"
         :month="month"
+        @select="onItemSelect(key)"
       />
     </ol>
+    
   </div>
 </template>
 
@@ -43,7 +46,16 @@ const props = defineProps({
   month: { type: Number, default: new Date().getMonth() },
 });
 const client = useSupabaseClient();
-const { days } = await useGetDaysData(props.year, props.month);
+
+const showModal = ref<boolean>(false);
+const selectDay = ref<number | null>(null);
+
+const { first, last, lastYear, days } = await useGetDaysData(props.year, props.month);
+
+function onItemSelect(key: number) {
+  selectDay.value = Number(key) || null;
+  showModal.value = true;
+}
 async function signOut() {
   const { error } = await client.auth.signOut()
   if (!error) {

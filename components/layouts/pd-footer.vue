@@ -1,8 +1,8 @@
 <template>
-  <footer class="fixed w-full bottom-0 transform transition duration-500 ease-in-out z-30 h-[30rem] bg-zinc-800 mt-1" :class="{ 'translate-y-[25rem]': !isShow }">
-    <div class="relative p-8">
-      <div class="absolute top-2 left-1/2 ml--20 h-0.5 w-20 bg-white rounded-full translate-x-[-2.5rem]" @click="$emit('show')" />
-      <span>Дата установки: {{ new Date(date).toLocaleString() }} PWA Installed: {{ $pwa?.isPWAInstalled }}</span>
+  <footer class="fixed bottom-0 left-0 z-20 w-full p-4 border-t shadow md:flex md:items-center md:justify-between bg-gray-800 border-gray-600">
+    <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">
+      Дата установки: {{ new Date(date).toLocaleString() }}
+    </span>
       <ClientOnly>
         <div
           v-if="$pwa?.offlineReady || $pwa?.needRefresh"
@@ -34,15 +34,10 @@
           <button @click="$pwa.cancelInstall()">Нет</button>
         </div>
       </ClientOnly>
-    </div>
-    
-  </footer>
+</footer>
 </template>
 
 <script setup lang="ts">
-defineProps({
-  isShow: { type: Boolean, default: false }
-});
 const date = useAppConfig().buildDate;
 </script>
 
@@ -50,7 +45,7 @@ const date = useAppConfig().buildDate;
 .pwa-toast {
   position: fixed;
   right: 0;
-  bottom: 0;
+  bottom: 60px;
   margin: 16px;
   padding: 12px;
   border: 1px solid #8885;
