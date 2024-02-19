@@ -3,10 +3,10 @@
     tabindex="-1"
     class="flex bg-black bg-opacity-80 overflow-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-full max-h-full"
   >
-    <div class="relative p-4 w-full max-w-2xl max-h-full">
+    <div class="relative p-4 max-w-2xl max-h-full">
       <div class="relative rounded-lg shadow bg-gray-700">
         <div
-          class="flex items-center justify-between pt-4 px-4 md:pt-5 md:px-5  rounded-t border-gray-600"
+          class="flex items-center justify-between pt-4 px-4 md:pt-5 md:px-5 rounded-t border-gray-600"
           :class="{ 'border-b pb-4 md:mb-5': title }"
         >
           <h3 class="text-xl font-semibold text-gray-900 text-white">

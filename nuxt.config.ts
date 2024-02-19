@@ -33,9 +33,10 @@ export default defineNuxtConfig({
   imports: {
     autoImport: true,
   },
-  css: [
-    '~/assets/styles/main.css'
-  ],
+  css: [ "~/assets/scss/styles.scss" ],
+  build: {
+    transpile: ['@vuepic/vue-datepicker']
+  },
   appConfig: {
     // you don't need to include this: only for testing purposes
     buildDate: new Date().toISOString(),

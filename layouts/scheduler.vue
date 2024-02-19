@@ -2,7 +2,7 @@
     <main ref="refWindow" class="max-w-5xl relative mx-auto w-full pb-20">
     <pd-header :year="year" :month="month" @preview="preview" @next="next" />
     <slot />
-    <pd-footer class="flex-0" />
+    <navigation />
     </main>
 </template>
 
@@ -31,14 +31,14 @@ const month = computed(() => {
 function preview() {
   const _year = month.value === 0 ? year.value - 1 : year.value;
   const _month = month.value === 0 ? 11 : month.value - 1;
-  navigateTo(`/${_year}/${_month}`);
+  navigateTo(`/calendar/${_year}/${_month}`);
 }
 
 function next() {
   const _year = month.value === 11 ? year.value + 1 : year.value;
   const _month = month.value === 11 ? 0 : month.value + 1;
   if (_year <= new Date().getFullYear()) {
-    navigateTo(`/${_year}/${_month}`);
+    navigateTo(`/calendar/${_year}/${_month}`);
   }
 }
 </script>

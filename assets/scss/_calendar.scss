@@ -1,0 +1,69 @@
+.calendar {
+    & .calendar__wrapper {
+        grid-template-columns: repeat(7, 1fr);
+        @apply grid mx-auto p-0 text-right;
+    }
+    &.calendar__short {
+        .calendar__wrapper {
+            &.weekdays {
+                @apply bg-zinc-700;
+                li {
+                    font-size: 0;
+                }
+                > li abbr:after {
+                    content: attr(title);
+                    @apply text-lg text-center;
+                }
+            }
+        }
+    }
+    &.calendar__full {
+        .calendar__wrapper {
+            grid-gap: 1em;
+        }
+
+        li {
+            @apply flex items-center justify-center list-none ml-0;
+            &__day {
+                @apply absolute right-0 top-0 mt-1 mr-1 md:mt-2 md:mr-2 text-xs md:text-xl;
+            }
+        }
+
+        .weekdays {
+            margin-bottom: 1em;
+            li {
+                height: 4vw;
+                &.holiday {
+                    @apply text-zinc-500;
+                }
+            }
+
+            abbr[title] {
+                @apply border-0 font-medium no-underline;
+            }
+        }
+
+        .days li {
+            height: 12vw;
+            @apply relative border border-zinc-50 max-h-32;
+            &.holiday {
+                @apply bg-zinc-500;
+            }
+        }
+
+        @media all and (max-width: 800px) {
+            .calendar__wrapper {
+                grid-gap: 0.25em;
+                &.weekdays {
+                    li {
+                        font-size: 0;
+                    }
+                    > li abbr:after {
+                        content: attr(title);
+                        @apply text-lg text-center;
+                    }
+                }
+            }
+        }
+    }
+}

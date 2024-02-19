@@ -1,7 +1,7 @@
 <template>
   <main class="mx-auto">
     <slot />
-    <pd-footer />
+    <navigation />
   </main>
 </template>
 
