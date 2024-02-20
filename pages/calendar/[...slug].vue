@@ -9,6 +9,7 @@
     <scheduler
       :year="year"
       :month="month"
+      :vacation="data"
       class="calendar__full"
       v-slot="{ item, date }"
     >
@@ -50,6 +51,10 @@ const month = computed(() => {
     ? Number(m)
     : new Date().getMonth();
 });
+
+const { data, pending, refresh } = await useFetch(
+  `api/supabase/filter/vacation-by-month?year=${year.value}&month=${month.value}`
+);
 
 function onItemSelect(key: number) {
   selectDay.value = Number(key) || null;

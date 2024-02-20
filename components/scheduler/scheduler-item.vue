@@ -33,6 +33,7 @@ const props = defineProps({
 });
 
 const { first, last, lastYear, work } = await useGetDaysData(props.year, props.month);
+
 const vacationRange = ['2024-02-14', '2024-02-17']
 
 const firstPayDay = computed(() => {

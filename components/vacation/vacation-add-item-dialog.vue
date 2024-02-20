@@ -36,7 +36,8 @@ const emit = defineEmits(["select", "update:modelValue"]);
 const dateRange = ref<string[]>([]);
 function onAdd() {
   if (dateRange.value.length) {
-    emit("select", dateRange);
+    const [date_from, date_to] = dateRange.value
+    emit("select", { date_from, date_to });
     emit("update:modelValue", false);
   }
 }

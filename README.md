@@ -1,3 +1,7 @@
+# Generating types supabase
+Look at the [Generating Types](https://supabase.com/dashboard/project/ahreocqknadqiaiwaooj/api?page=tables-intro) 
+paragraph.
+
 # Nuxt 3 Minimal Starter
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.

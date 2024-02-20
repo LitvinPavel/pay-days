@@ -1,6 +1,5 @@
 import { serverSupabaseUser as User, serverSupabaseClient as Client } from "#supabase/server"; 
 
-
 export default defineEventHandler(async (event) => {
   try {
     const user = await User(event);

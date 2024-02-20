@@ -48,9 +48,19 @@
 const props = defineProps({
   year: { type: Number, default: new Date().getFullYear() },
   month: { type: Number, default: new Date().getMonth() },
+  vacation: { type: Array as PropType<Tables<'vacations'>[] | undefined>, default: null }
 });
 
-const { days } = await useGetDaysData(props.year, props.month);
+const { days, work } = await useGetDaysData(props.year, props.month);
+
+const workFromVacation = computed(() => {
+  const d: { date_from: any, date_to: any } = props.vacation;
+  console.log(props.vacation)
+  if (d && d?.date_from && d?.date_to) {
+    return work.filter((item: number) => isWithinDateRange(props.year, props.month, item, [d.date_from, d.date_to]))
+  } else return []
+  
+})
 </script>
 
 <style scoped></style>
